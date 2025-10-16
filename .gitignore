@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.jsonl
+
+# Data and artifacts
+data/repos/
+data/repos/**
+datasets/*.jsonl
+datasets/**/train.jsonl
+datasets/**/valid.jsonl
+datasets/**/test.jsonl
+model/checkpoints/
+model/metrics/
+model/tokenizers/
+
+# HF / wandb caches
+~/.cache/huggingface/
+~/.cache/
+wandb/
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
