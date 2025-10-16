@@ -97,3 +97,20 @@ cat path/to/Foo.java | python scripts/predict.py --ckpt model/checkpoints/run1-j
 Examples included:
 - `examples/wrong_name_lru_cache.py` — LRU cache with wrong class name.
 - `examples/wrong_name_image.py` — image container with wrong class name.
+
+## GPU Selection and CUDA Devices
+
+If you have multiple GPUs and want to select which one to use for training, set the `CUDA_VISIBLE_DEVICES` environment variable before running the training script. For example, to use GPU 1:
+
+```bash
+CUDA_VISIBLE_DEVICES=1 python scripts/train.py \
+  --model Salesforce/codet5p-220m \
+  --data datasets/python \
+  --output model/checkpoints/run1-python \
+  --batch-size 8 --grad-accum 2 --epochs 3 --fp16 --cuda-device 0
+```
+
+- The script argument `--cuda-device` should be set to 0 when using `CUDA_VISIBLE_DEVICES`, as the visible device will be mapped to index 0.
+- This ensures all CUDA allocations go to the correct GPU and avoids out-of-memory errors on the wrong device.
+
+See [PyTorch CUDA documentation](https://pytorch.org/docs/stable/notes/cuda.html#environment-variables) for more details.
