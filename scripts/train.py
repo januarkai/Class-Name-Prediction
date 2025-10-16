@@ -78,6 +78,8 @@ class Preprocessor:
 
 
 def main():
+    # Import CSVLoggerCallback
+    from csv_logger import CSVLoggerCallback
     ap = argparse.ArgumentParser()
     ap.add_argument('--model', type=str, required=True)
     ap.add_argument('--data', type=str, required=True)
@@ -130,6 +132,7 @@ def main():
         seed=args.seed,
     )
 
+    csv_log_path = os.path.join(args.output, 'training_log.csv')
     trainer = Seq2SeqTrainer(
         model=model,
         args=training_args,
@@ -137,6 +140,7 @@ def main():
         eval_dataset=ds['validation'],
         tokenizer=tokenizer,
         data_collator=data_collator,
+        callbacks=[CSVLoggerCallback(csv_log_path)],
     )
 
     trainer.train()
